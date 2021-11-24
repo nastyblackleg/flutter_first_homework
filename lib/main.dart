@@ -1,7 +1,11 @@
+import 'package:first_flutter_project/AnimalController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const GetMaterialApp(
+    home: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,34 +20,11 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  num animal = 0;
-
-  String getImage() {
-    switch (animal) {
-      case 1:
-        return 'https://i.pinimg.com/originals/c9/6e/16/c96e161fe2f8aaac1457c8169e6eea56.jpg';
-      case 2:
-        return 'https://i.pinimg.com/originals/e5/d7/af/e5d7af4dfdaad0999ffc6274d54a271d.jpg';
-      case 3:
-        return 'https://innocentenglish.com/daily-break/cute-animals/cute-ducklings-sleeping.jpg';
-      case 4:
-        return 'https://lh3.googleusercontent.com/proxy/odbleuxNBg52VrjpJv-fNKNTrNzIQEBnUBVab4tEKOZireqyKUzIWDqUM7BcrMEKos7E-jotPi9wI1iSSZfMguCITCfgk2LvbLvN2DJeLLr0Im1hMgvnpUi3HMWFzwuLuc11Q9atTrH53s0';
-      default:
-        // default image
-        return '';
-    }
-  }
-
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final AniamlController animalController = Get.put(AniamlController());
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Animals'),
@@ -52,8 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          if (animal > 0 && animal < 5) Image.network(getImage()),
-          if (animal == 0)
+          Obx(
+            () => Image.network(
+              animalController.animal.value,
+              height: 500,
+            ),
+          ),
+          if (animalController.animal == '')
             const Padding(
               padding: EdgeInsets.only(top: 50),
               child: Text(
@@ -74,11 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ))),
                     onPressed: () {
-                      setState(() {
-                        animal = 1;
-                      });
+                      animalController.setAnimal(
+                          'https://images.unsplash.com/photo-1474511320723-9a56873867b5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1172&q=80');
                     },
-                    child: const Text('Animal 1'),
+                    child: const Text('Fox'),
                   ),
                   ElevatedButton(
                     style: ButtonStyle(
@@ -88,11 +73,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ))),
                     onPressed: () {
-                      setState(() {
-                        animal = 2;
-                      });
+                      animalController.setAnimal(
+                          'https://images.unsplash.com/photo-1555169062-013468b47731?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80');
                     },
-                    child: const Text('Animal 2'),
+                    child: const Text('Parrot'),
                   )
                 ],
               ),
@@ -107,11 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ))),
                     onPressed: () {
-                      setState(() {
-                        animal = 3;
-                      });
+                      animalController.setAnimal(
+                          'https://images.unsplash.com/photo-1546182990-dffeafbe841d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1159&q=80');
                     },
-                    child: const Text('Animal 3'),
+                    child: const Text('Lion'),
                   ),
                   ElevatedButton(
                     style: ButtonStyle(
@@ -121,11 +104,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ))),
                     onPressed: () {
-                      setState(() {
-                        animal = 4;
-                      });
+                      animalController.setAnimal(
+                          'https://images.unsplash.com/photo-1456926631375-92c8ce872def?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
                     },
-                    child: const Text('Animal 4'),
+                    child: const Text('Leopard'),
                   )
                 ],
               ),
